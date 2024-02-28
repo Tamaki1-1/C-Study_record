@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 
 class control
 {
@@ -132,6 +133,61 @@ class control
         else // 60보다 낮으면 F
         {
             Console.WriteLine("F");
+        }
+
+        Console.WriteLine("\n8-4 switch문으로 다양한 조건 처리하기");
+
+        //switch문으로 객관식문제 출제하기
+
+        Console.WriteLine("가장 좋아하는 프로그래밍 언어는? ");
+        Console.WriteLine("1.C++          2.C#");
+        Console.WriteLine("3.Java         4.Nocode");
+        Console.Write("답: ");
+        var 문제 = Console.ReadLine();
+
+        switch (Convert.ToInt32(문제))
+        {
+            case 1: // 1번 선택 시
+                Console.WriteLine("C++을 선택했습니다.");
+                break;
+            case 2: // 2번 선택 시
+                Console.WriteLine("C#을 선택했습니다");
+                break;
+            case 3: // 3번 선택 시
+                Console.WriteLine("Java를 선택했습니다.");
+                break;
+            case 4: // 4번 선택 시
+                Console.WriteLine("Nocode를 선택했습니다..");
+                break;
+            default:    //if문의 else와 흡사하다.
+                Console.WriteLine("; _ ;....????");
+                break;
+             }
+
+                //switch문은 문자열로도 가능하다.
+
+                Console.Write("날씨는 어떻습니까?(맑음, 흐림, 비, 눈 中) ");
+                string 날씨 = Console.ReadLine();
+
+                switch (날씨)
+                {
+                    case "맑음":
+                        Console.WriteLine("맑아요");
+                        break;
+                    case "흐림":
+                        Console.WriteLine("흐려요");
+                        break;
+                    case "비":
+                        Console.WriteLine("비 와요");
+                        break;
+                    case "눈":
+                        Console.WriteLine("눈 와요");
+                        break;
+
+                    default:
+                        Console.WriteLine("몰라요");
+                        break;
+                }
         }
     }
 }
