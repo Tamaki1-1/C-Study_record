@@ -1,0 +1,97 @@
+using System;
+
+
+class 클래스
+{
+    
+    static void Main(string[] args)
+    {
+        Console.WriteLine("14.클래스 사용해보기");
+        Console.WriteLine("내장 형식 클래스: 닷넷 프레임워크에서 만들어 놓은 내장 형식");
+        Console.WriteLine("사용자 정의 형식 클래스: 사용자가 직접 만드는 클래스");
+    }
+    
+
+    
+    static void Main(string[] args)
+    {
+        Console.WriteLine("14-1 클래스 레벨의 메서드 호출하기");
+        HI();       //메서드 레벨에서 HI 메서드 호출 메서드()
+        클래스.HI();//클래스 레벨에서 HI 메서드 호출 클래스.메서드()
+    }
+    
+    static void HI() //static이 붙으니 "정적 메서드"
+    {
+        Console.WriteLine("클래스의 HI 메서드를 호출했습니다.");
+
+    }
+    
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-2 정적 메서드와 인스턴스 메서드");
+        Console.WriteLine("static이 붙으면 정적 메서드, 아니라면 인스턴스 메서드");
+        클래스.정적메서드(); //정적 메서드 호출
+
+        클래스 인스턴스_메서드 = new 클래스(); //인스턴스 메서드 호출
+        인스턴스_메서드.인스턴스메서드();
+        
+
+    }
+
+    static void 정적메서드()
+    {
+        Console.WriteLine("정적 메서드입니다.");
+    }
+
+    void 인스턴스메서드()
+    {
+        Console.WriteLine("인스턴스메서드입니다.");
+    }
+    
+}
+
+
+class 메인_클래스
+{
+    static void Main()
+    {
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-3 클래스 여러개 생성해서 호출하기");
+
+        공유_클래스.공유(); // 다른 클래스에서 호출하기
+    }
+}
+public class 공유_클래스 //외부(public)로 공유 가능한 클래스
+{
+    public static void 공유() //외부(public)로 공유 가능한 메서드
+    {
+        Console.WriteLine("클래스");
+    }
+}
+
+class 클래스2
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-4 Environment 클래스로 프로그램 강제 종료하기");
+
+        Console.WriteLine("출력된다!");
+        Environment.Exit(0);             //강제 종료
+        Console.WriteLine("출력 되니?"); //실행되지 않음
+
+
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-5 환경 변수(Environment) 사용해보기");
+
+        Console.WriteLine(Environment.SystemDirectory); //시스템 폴더
+        Console.WriteLine(Environment.Version);         //닷넷 기준 버전
+        Console.WriteLine(Environment.OSVersion);       //운영 체제 버전
+        Console.WriteLine(Environment.MachineName);     //컴퓨터 이름
+        Console.WriteLine(Environment.UserName);        //사용자이름
+        Console.WriteLine(Environment.CurrentDirectory);//현재 폴더
+    }
+
+}
