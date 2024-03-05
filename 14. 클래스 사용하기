@@ -95,3 +95,76 @@ class 클래스2
     }
 
 }
+
+class exe파일_실행하기
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-6 EXE 파일 실행하기");
+        Process.Start("Notepad.exe"); //Process 클래스로 메모장 실행하기
+        Process.Start("Explorer.exe", "https://naver.com"); //네이버 실행
+    }
+}
+*/
+
+class 랜덤
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-7 Random 클래스 실행해 임의의 정수 출력하기");
+        Random random = new Random(); //Random 클래스는 인스턴스의 값을 새롭게 선언을 해줘야됨
+        Console.WriteLine(random.Next()); // 무작위 수 출력
+        Console.WriteLine($"0~4 출력해보기: {random.Next(5)}"); //0~4
+        Console.WriteLine($"1~100까지의 무작위 수 출력: {random.Next(1, 101)}"); //1~100
+
+
+        // 로또 번호 추첨기 만들어보기
+
+        Console.WriteLine("이번 주의 로또!");
+        Random roto = new Random();
+        int[] 번호 = new int[6];
+        int 숫자 = 0;
+
+
+        for (int i = 0; i < 6; i++) //로또 추첨기
+        {
+            숫자 = roto.Next(1, 46); //숫자에 1~45의 무작위 수 입력하기
+            bool 스위치 = false; // 기본값 false. 회차마다 false로 변한다
+
+            if (i > 0 && i < 6)
+            {
+
+                for (int j = 0; j < i; j++)
+                {
+
+                    if (번호[j] == 숫자) // 중복안된 숫자와 이번 회차 떄 뽑은 번호를 대조해 같으면 스위치 on
+                    {
+                        스위치 = true;
+                    }
+
+                }
+
+            }
+
+            if (스위치) //중복될 시 i를 감소시켜 다시 돌리게 함
+            {
+                --i;
+            }
+            else
+            {
+                번호[i] = 숫자; //중복이 없을 시 번호 하나씩 입력
+            }
+
+        }
+
+
+        for (int i = 0; i < 6; i++) //출력문
+        {
+            Console.WriteLine($"{i+1}번 번호: {번호[i]}"); 
+        }
+
+
+    }
+}
