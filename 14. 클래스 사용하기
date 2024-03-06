@@ -168,3 +168,100 @@ class 랜덤
 
     }
 }
+class 가위바위보
+{
+
+    //Ai와 가위바위보 게임 시스템 구현하기
+
+    static void Main(string[] args)
+    {
+        string[] 가위바위보 = new string[3] { "가위", "바위", "보" }; //가위1 , 바위2 , 보3
+        int 자신 = 0;
+        int ai = 0;
+
+        Console.WriteLine("AI와 가위바위보 대전하기!");
+        Console.WriteLine("1.가위, 2.바위, 3.보");
+        Console.Write("입력하세요:");
+        자신 = Convert.ToInt32(Console.ReadLine());
+        ai = new Random().Next(1, 4); //AI 랜덤 값 적용
+
+        Console.WriteLine($"나: {가위바위보[자신-1]}!!!!!!!!!!!!");
+        Console.WriteLine($"Ai: {가위바위보[ai-1]}!!!!!!!!!!");
+
+
+        if (자신 == ai)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("비겼습니다!!!");
+            Console.ResetColor();
+        }
+        else
+        {
+            switch (자신)
+            {
+                case 1:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine((3 == ai) ? "승" : "패");
+                    Console.ResetColor();
+                    break;
+                case 2:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine((1 == ai) ? "승" : "패");
+                    Console.ResetColor();
+                    break;
+                case 3:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine((1 == ai) ? "승" : "패");
+                    Console.ResetColor();
+                    break;
+            }
+
+
+        }
+
+    }
+}
+
+
+class 정규식
+{
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("14-8 정규식 - 문자열에서 특정 패턴을 찾아 주는 기능");
+
+        string 문자열 = "안녕하세요                감사해요                   잘있어요               다시 만나요";
+        var 정규식 = new Regex("\\s+"); //하나 이상의 공백 패턴 검사, [\s]기호는 공백 문자를 의미한다.
+        string 정규식_변환 = 정규식.Replace(문자열, " ");
+        Console.WriteLine(문자열);
+        Console.WriteLine(정규식_변환);
+    }
+
+
+
+
+
+}
+
+
+class 정규식_이메일 //이메일 형태인지 검증하기
+{
+    static void Main(string[] args)
+    {
+        string 이메일 = "ghkstn7767@naver.com"; // 이메일 입력
+        Console.WriteLine(이메일검사(이메일));
+    }
+
+    static bool 이메일검사(string email)
+    {
+        bool 여부 = false;
+
+
+        Regex 검증 = new Regex(@"[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?");
+
+        여부 = 검증.IsMatch(email);
+
+        return 여부;
+    }
+
+}
