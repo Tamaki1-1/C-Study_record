@@ -265,3 +265,109 @@ class 정규식_이메일 //이메일 형태인지 검증하기
     }
 
 }
+class stopwatch
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Stopwatch 클래스를 사용하여 특정 프로세스의 경과 시간을 밀리초 단위로 표시하는 기능을 구현하는 예제");
+        Stopwatch 타이머 = new Stopwatch(); //Stopwatch 인스턴스 선언
+        타이머.Start(); //타이머 시작
+        대기(); //대기 함수의 내용 3초 대기
+        타이머.Stop(); //타이머 중지
+
+        Console.WriteLine($"경과 밀리초: {타이머.Elapsed.TotalMilliseconds}"); // 타이머를 밀리초로 표현
+        Console.WriteLine($"경과 초: {타이머.Elapsed.TotalSeconds}"); // 타이머 초로 표현
+        
+    }
+
+    static void 대기()
+    {
+
+        Thread.Sleep(3000); // 3000밀리초 = 3초 대기
+    }
+
+}
+
+
+class 클래스_용어
+{
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-9 값 형식과 참조 형식, 박싱과 언박싱");
+
+        Console.WriteLine("값 형식은 개체에 값 자체를 담고 있는 구조입니다.");
+        int 값1 = 33;
+        string 값2 = "eee";
+
+        Console.WriteLine("참조 형식은 개체가 값을 담고 있는 또 다른 개체를 포인터로 바라보는 구조입니다.");
+        int 참조 = 10 + 값1;
+
+
+        Console.WriteLine("박싱 - 정수 형식의 데이터를 오브젝트 형식의 데이터에 담는 형태");
+        int 박싱 = 1234;
+        object 포장 = 박싱;
+        Console.WriteLine(포장);
+
+        Console.WriteLine("언박싱 - 참조 형식의 데이터를 값 형식의 데이터로 변환");
+        object 포장2 = 123;
+        int 언박싱 = (int)포장2; //int로 변환
+        Console.WriteLine(언박싱);
+
+
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-10 is 연산자(bool 형식)로 특정 형식인지 물어보기");
+        Console.WriteLine("is 연산자는 변환이 가능하거나, 그 형식이라면 true를 반환합니다.");
+
+        object 숫자 = 12;
+
+        if (숫자 is int)
+        {
+            Console.WriteLine("12는 정수형으로 변환 가능합니다.");   //true
+        }
+        if (숫자 is string)
+        {
+            Console.WriteLine("12는 문자열로 변환 가능합니다.");    //false
+        }
+        if (숫자 is double)
+        {
+            Console.WriteLine("12는 실수형으로 변환 가능합니다.");   //false
+        }
+
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("14-11 as 연산자(Convert 형식)로 형식 변환하기");
+        Console.WriteLine("as 연산자는 특정 데이터를 특정 데이터 형식으로 변환하는데 사용합니다.");
+
+        object 박스 = 123; //오브젝트 값
+        string 에이에스 = 박스 as string; //as 연산자로 언박싱
+        Console.WriteLine(에이에스 == null ? "빈 값" : ":3"); // 빈 값 (true) 출력
+
+        //as 연산자로 변환이 가능하면 변환하고, 그렇지 않으면 null 반환하기
+
+        object 옵젝 = "안녕하세요";
+        string 변환 = 옵젝 as string; //문자열이니 as 연산자로 언박싱 가능
+        Console.WriteLine(변환); //출력
+
+
+        object 옵젝2 = 1234;
+        string 변환2 = 옵젝2 as string;
+
+        if (변환2 == null)
+        {
+            Console.WriteLine("변환2는 null입니다.");
+        }
+
+        object 옵젝3 = 12344;
+
+        if (옵젝3 is string)
+        {
+            Console.WriteLine("옵젝3은 문자열로 변환가능합니다.");
+        }
+        else
+        {
+            Console.WriteLine("옵젝3은 문자열로 변경 불가능합니다.");
+        }
+
+    }
+}
