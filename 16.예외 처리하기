@@ -157,4 +157,43 @@ class 네번째
 
 
 }
+class 쓰로윙
+{
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("16-5 throw 구문으로 직접 예외 발생시키기");
+
+        Console.WriteLine("[1] 시작");
+
+		try
+		{
+			Console.WriteLine("[2] 실행");
+			throw new Exception();
+		}
+		catch (Exception)
+		{
+			Console.WriteLine("; _ ;.??");
+		}
+		finally
+		{
+			Console.WriteLine("프로그램을 종료합니다.");
+		}
+
+		//try, catch, finally, throw 모두 사용하기
+
+		try
+		{
+			throw new Exception("내가 만든 오류");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine(ex.Message); //오류 내용은 "내가 만든 오류"
+		}
+		finally
+		{
+			Console.WriteLine("프로그램을 종료하겠습니다.");
+		}
+    }
+}
     
