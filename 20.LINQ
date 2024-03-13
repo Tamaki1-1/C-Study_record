@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 class LINQ
 {
@@ -27,7 +28,7 @@ class LINQ
 
         //Average() - 컬렉션의 평균
 
-        int[] 배열3 = {1,3,4};
+        int[] 배열3 = { 1, 3, 4 };
 
         double 평균 = 배열3.Average(); //배열3의 평균값을 저장
         Console.WriteLine($"{nameof(배열3)}의 평균: {평균:#,###.##}"); //2.67 //nameof() - 매개 변수 안에 있는 변수의 "이름"을 불러온다.
@@ -89,7 +90,7 @@ class LINQ
 
         int[] 인트3 = { 1, 2, 3, 4, 5 };
         List<int> 조건3 = 인트3.Where(x => x % 2 == 0).ToList(); //짝수만 가져옴
-        var 인트4 = new List<int> {1, 2, 3, 4, 5 };
+        var 인트4 = new List<int> { 1, 2, 3, 4, 5 };
         int 조건4 = 인트4.Where(x => x % 2 == 1).Sum(); //홀수의 합계
 
         foreach (var item in 조건3)
@@ -101,7 +102,7 @@ class LINQ
 
         //짝수고 3보다 큰 조건 처리해보기
 
-        int[] 배열1 = {1,2,3,4,5,6,7,8,9,10 };
+        int[] 배열1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         var 처리 = 배열1.Where(x => x % 2 == 0 && x > 3);
 
         foreach (var item in 처리)
@@ -177,7 +178,7 @@ class LINQ
 
 
         //OrderByDescending() 메서드로 문자열 컬렉션 내림차순 정렬하기
-        string[] 색상2 = { "빨강", "파랑", "연두", "검정"};
+        string[] 색상2 = { "빨강", "파랑", "연두", "검정" };
         var 정렬2 = 색상2.OrderByDescending(x => x);
 
         foreach (var item in 정렬2)
@@ -238,7 +239,65 @@ class LINQ
         Console.WriteLine(퍼스트2);//파랑!
         Console.WriteLine(퍼스트3);//null
         Console.WriteLine(퍼스트4);//블랙!
-        
+
+
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("20-4 메서드 구문과 쿼리 구문");
+        Console.WriteLine("메서드 구문 - Where() 같은 메서드를 사용하여 컬렉션을 다루는 방법");
+        Console.WriteLine("쿼리 구문 - from, where, select 같은 키워드를 사용하여 쿼리 형태로 다루는 방법");
+
+
+        //짝수를 내림차순으로
+        var numbers = Enumerable.Range(1, 10);
+        var 메서드구문 = numbers.Where(x => x % 2 == 0).OrderByDescending(x => x);
+        var 쿼리구문 = (from n in numbers where n % 2 == 0 orderby n descending select n);
+
+        foreach (var item in 메서드구문)
+        {
+            Console.WriteLine(item);
+        }
+
+        foreach (var item in 쿼리구문)
+        {
+            Console.WriteLine(item);
+        }
+
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("20-5 Select() 확장 메서드를 사용하여 새로운 형태로 가공하기");
+        Console.WriteLine("Select() - 컬렉션에서 새로운 형태의 데이터로 만들어 사용할 수 있음");
+        int[] 숫자1 = { 1, 2, 3, 4, 5, 6 };
+        var 셀렉 = 숫자1.Select(x => x * x);
+
+        foreach (var item in 셀렉)
+        {
+            Console.WriteLine(item); //서로 곱하여 출력
+        }
+
+
+        //새로운 개체를 만들어서 출력
+
+        List<string> 이름 = new List<string> { "카나시이", "타노시이", "우레시이" };
+        var 이름변수 = 이름.Select(이름 => new { name = 이름 });
+
+        foreach (var item in 이름변수)
+        {
+            Console.WriteLine(item);
+            //{ name = 카나시이 }
+            //{ name = 타노시이 }
+            //{ name = 우레시이 }
+        }
+
+
+        Console.WriteLine("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+        Console.WriteLine("20-6 ForEach() 메서드로 반복 출력해보기");
+        Console.WriteLine("ForEach() - List<T> 형태를 갖는 리스트 값만큼 반복함 (foreach, for 대체제)");
+
+        List<int> 숫자2 = new List<int> { 1, 2, 3, 4, 5, };
+        숫자2.Where(n => n > 2).ToList().ForEach(n => Console.WriteLine(n));//3,4,5
+        숫자2.ForEach(n => Console.WriteLine(n)); //1, 2, 3, 4, 5
+
+
+
     }
 
 }
