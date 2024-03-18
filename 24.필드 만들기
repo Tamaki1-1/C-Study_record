@@ -1,0 +1,172 @@
+using System;
+
+class 필드
+{
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("24.필드 - 클래스 내에서 선언된 변수 또는 배열");
+        Console.WriteLine("일반적으로 클래스의 부품 역할을 하며, 대부분 private 엑세스 한정자가 붙고,\n" +
+                          "클래스 내에서 데이터를 담는 그릇 역할을 한다");
+
+    }
+}
+
+
+
+//24-1 지역변수와 전역변수
+
+class 지역변수_전역변수
+{   
+    //필드 또는 멤버변수
+    static string 필드 = "안녕하세요"; //필드 또는 멤버 변수 
+
+    static void Main(string[] args)
+    {
+        //지역변수
+        int a = 1234; //지역변수들
+        int b = 2222; //Main 메서드가 종료도히면 자동으로 소멸
+        int k = 3212;
+
+
+        Console.WriteLine($"{a + b + k}"); //6668
+        Console.WriteLine(필드); //안녕하세요
+        Test(); //안녕하세요
+    }
+
+    static void Test() => Console.WriteLine(필드); //메서드에 전역변수 사용가능
+}
+
+
+
+
+//24-2 필드의 종류
+
+class 필드_종류
+{
+    //변수 형식 필드 - 지역변수와 마찬가지로 값을 대입하여 사용
+    private string 변수_형식 = "안녕하세요";
+
+    //상수 형식 필드 - 한 번 값을 초기화한 후에는 다시 값을 재설정할 수 없습니다.
+    private const int 상수_형식 = 3;
+
+    //읽기 전용 필드 - 상수와 비슷하지만, 선언할 때 초기화시키지 않고 생성자로 초기화함.
+    private readonly int 읽기_전용_형식;
+
+    //배열 형식 필드 - 배열을 필드 레벨로 올린 개념으로, 값을 여러 개 보관 가능
+    private int[] 배열_형식 = new int[3];
+
+    //기타, 개체 형식 필드 - 기타 필드에는 모든 데이터 형식이 올 수 있다.
+    private object 개체_형식 = "개체";
+}
+
+
+//24-3 필드 이니셜라이저를 사용하여 필드 초기화
+
+class 이니셜라이저
+{
+    private string 메세지 = "안녕하세요."; //필드(멤버 변수) - 필드 이니셜라이저
+    public void HI() //메서드
+    {
+        this.메세지 = "반갑습니다"; //필드 초기화
+        Console.WriteLine(this.메세지); //메세지 출력
+    }
+}
+
+class main
+{
+    static void Main(string[] args)
+    {
+        이니셜라이저 이니셜 = new 이니셜라이저(); //인스턴스 생성
+        이니셜.HI(); //반갑습니다
+    }
+}
+
+
+
+//24-4 배열 형식의 필드 사용하기
+
+class 배열클래스
+{
+    private string[] 요일 = { "월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" };
+
+    public void 요일출력()
+    {
+        foreach (var item in 요일)
+        {
+            Console.WriteLine($"{item}\t");
+        }
+    }
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        배열클래스 week = new 배열클래스();
+        week.요일출력(); //"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일" 출력
+
+    }
+}
+
+
+//24-5 엑세스 한정자(접근 권한)
+
+class 엑세스_한정자
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("public - 멤버에 대한 접근이 제한되지 않는다.");
+        Console.WriteLine("private(또는 공백) - 현재 클래스 내에서만 접근 가능");
+        Console.WriteLine("protected - 현재 클래스 또는 현재 클래스를 상속하는 클래스에만 접근이 허가");
+        Console.WriteLine("internal - 현재 프로젝트의 모든 클래스에 접근이 허가");
+        Console.WriteLine("protected internal - 현재 어셈블리(DLL) 또는 현재 어셈블리에서 파생된 모든 클래스에 엑세스를 허가");
+    }
+}
+
+
+//24-6 필드에 public 엑세스 한정자 사용하기
+
+namespace 퍼블릭필드
+{
+    class Category
+    {
+        public string 카테고리; //접근 가능한 필드
+    }
+
+    class 메인
+    {
+        static void Main(string[] args)
+        {
+            Category c = new Category(); //인스턴스 생성
+            c.카테고리 = "책";
+            Console.WriteLine(c.카테고리); //책
+        }
+    }
+}
+
+
+//24-7 public과 private 엑세스 한정자
+
+public class 테스트클래스
+{
+    private static string name = "백승수"; //클래스 내에만 허용(비공개)
+    public static string name2 = "길벗"; //필드에 public 필드는 권장하지 않는다
+
+
+    public static string 반환() 
+    {
+        return name;
+    }
+}
+
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine(테스트클래스.반환()); //public 메서드를 통해 반환 출력
+
+        Console.WriteLine(테스트클래스.name2); //public 멤버는 외부에 노출
+    }          
+}
