@@ -170,3 +170,35 @@ class 메인
         Console.WriteLine(테스트클래스.name2); //public 멤버는 외부에 노출
     }          
 }
+
+
+//24-8 여러 가지 형태의 필드 선언, 초기화, 참조 구현하기
+
+namespace FieldNote
+{
+    class Person
+    {
+        private string name = "타마키";
+        private const int age = 24;
+        private readonly string nickname = "たまき";
+        private string[] stack = { "C#", "JAVA" };
+        private object all = DateTime.Now.ToShortTimeString();
+
+
+        public void 프로필()
+        {
+            string view = $"{name}, {age}, {nickname}, {String.Join(",", stack)},{Convert.ToDateTime(all)}";
+
+            Console.WriteLine(view);
+        }
+    }
+
+    class FieldNote
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person(); //인스턴스 생성
+            person.프로필(); //타마키, 24, たまき, C#,JAVA,2024-03-18 오후 11:36:00
+        }
+    }
+}
