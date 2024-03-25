@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Reflection;
-/*
+
 class 대리자
 {
 
@@ -377,7 +377,7 @@ class PredicateTT
         Predicate<Type> predicate1 = t => t.IsPrimitive;
         Console.WriteLine(predicate1(typeof(int))); //True
     }
-}*/
+}
 
 
 
@@ -385,11 +385,11 @@ class PredicateTT
 
 class 잔다
 {
-    static IEnumerable<int> FindNumber(Predicate<int> predicate) //반복기
+    static IEnumerable<int> FindNumber(Predicate<int> predicate) //1~100까지 출력하는 반복기
     {
         for (int i = 1; i <= 100; i++)
         {
-            if (i % 33 == 0)
+            if (predicate(i))
             {
                 yield return i;
             }
@@ -398,13 +398,34 @@ class 잔다
 
     static void Main(string[] args)
     {
-        foreach (var item in FindNumber())
+        foreach (var item in FindNumber(f => f % 33 == 0)) //33의 배수만 가져옴
         {
-
+            Console.WriteLine(item);//33, 66, 99
         }
     }
 }
 
+
+
+//30-14 메서드의 매개변수로 메서드 전달하기
+
+class PassMethodAsParameter
+{
+    static int 길이(string data) => data.Length; //문자열 길이를 반환
+
+    static void StringLengthPrint(Func<string, int> func, string msg)
+    {
+        Console.WriteLine($"{msg}의 문자열 길이는 {길이(msg)}입니다.");
+    }
+
+
+    static void Main(string[] args)
+    {
+
+        StringLengthPrint(길이, "안녕하세요.");
+         
+    }
+}
 
 
 
