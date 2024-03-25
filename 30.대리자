@@ -1,0 +1,411 @@
+using System;
+using System.ComponentModel;
+using System.Reflection;
+/*
+class 대리자
+{
+
+    //함수 생성 - 매개변수도 없고, 반환값도 없는 단순 함수
+    static void 인사() => Console.WriteLine("안녕하세요.");
+
+    //대리자 생성 - 매개변수도 없고, 반환값도 없는 함수를 대신 실행할 대리자
+    delegate void SayDelegete();
+
+
+    static void Main(string[] args)
+    {
+
+        Console.WriteLine("30.대리자(위임/델리게이트)");
+        Console.WriteLine("대리자: 한번에 동일한 스타일의 메서드 하나 이상을 대신해서 호출할 수 있는 개념");
+
+
+
+        SayDelegete say = 인사; //"인사"함수를 say 이름으로 대신해서 호출
+        say(); // 안녕하세요.
+
+
+        //대리자 선언의 또 다른 방식
+        var hi = new SayDelegete(인사);
+        hi(); //안녕하세요.
+        
+    }
+
+
+
+
+
+}
+
+
+//30-1 대리자로 함수 대신 호출
+
+class 대리자
+{
+    //대리자 생성: 매개변수도, 반환값도 없는 함수를 담을 수 있는 포인터
+    delegate void Delegate();
+
+    static void HI() => Console.WriteLine("Hello Delegate"); //단순 메서드
+
+
+    static void Main(string[] args)
+    {
+        Delegate delegate1 = new Delegate(HI); // Delegate 이름 = new Delegate(메서드 이름)
+        delegate1(); //Hello Delegate
+        delegate1.Invoke(); //명시적으로 Invoke() 메서드 호출 //Hello Delegate
+    }
+
+
+
+
+}
+
+
+//30-2 대리자를 사용하여 메서드 대신 호출하기
+//대리자 변수 += new 대리자(메서드이름); 으로 하나 이상 등록 가능
+
+class 원의_공식
+{
+    static double 원의공식(int r) => 3.14 * r * r; //메서드(람다 식) - 매개변수도 있고, 반환값도 있는
+
+    delegate double GetAreaPointer(int r); //대리자 생성 - 매개변수도 있고, 반환값도 있는 대리자
+    static void Main(string[] args)
+    {
+        GetAreaPointer 공식 = 원의공식; //대리자의 개체 생성
+
+        Console.WriteLine(공식(3)); // 3.14 * 3 * 3
+        Console.WriteLine(공식(5)); // 3.14 * 5 * 5
+        Console.WriteLine(공식.Invoke(5)); // 3.14 * 5 * 5
+    }
+}
+
+
+
+//30-3 이름 없는 메서드(무명 메서드, 익명 메서드) 대신 호출
+
+
+class AnonymousDelegate
+{
+    delegate void delegate_(); //대리자 생성
+    static void Main(string[] args)
+    {
+
+        delegate_ gate = delegate () //대리자의 이름 없는 메서드의 생성
+        {
+            Console.WriteLine("반갑습니다."); //gate의 값
+        };
+
+
+        gate(); //대리자로 익명 메서드 호출
+
+
+        delegate_ gate2 = delegate () { Console.WriteLine("잘 부탁드려요"); }; //한줄로 출력
+
+        gate2(); //대리자로 익명 메서드 호출
+
+
+    }
+}
+
+
+
+//30-4 강력한 형식의 대리자 (Math.Pow를 대신 호출해보기)
+
+
+class 제곱
+{
+    delegate double pow (double x, double y);
+    static void Main(string[] args)
+    {
+        pow 제곱 = Math.Pow;
+        double Test = 제곱(2, 3); //2^3
+
+        Console.WriteLine(Test); //2^3 = 8
+
+    }
+}
+
+
+
+//30-5 대리자를 사용하여 메서드를 여러 개를 다중 호출하기
+
+
+namespace DelegatePractice
+{
+    public class CarDrivar
+    {
+        public static void 좌회전() => Console.WriteLine("좌회전");
+        public static void 우회전() => Console.WriteLine("우회전");
+        public static void 직진() => Console.WriteLine("직진");
+    }
+
+    public class Insa
+    {
+        public void Bye() => Console.WriteLine("잘가");
+    }
+
+    public delegate void GoHome();
+
+    
+    public class DelegatePractice
+    {
+        public delegate void Say();
+
+        private static void Hello() => Console.WriteLine("Hello");
+        private static void HI() => Console.WriteLine("HI");
+
+
+        static void Main(string[] args)
+        {
+            //1. 메서드는 따로따로 호출
+            CarDrivar.좌회전(); //정적이라 바로 호출 가능
+            CarDrivar.직진();
+            CarDrivar.우회전();
+
+            // 대리자를 사용한 메서드 여러개 등록 및 호출
+            GoHome go = new GoHome(CarDrivar.좌회전); //go = 좌회전
+            go += new GoHome(CarDrivar.직진); //go = 좌회전, 직진
+            go += new GoHome(CarDrivar.우회전); //go = 좌회전, 직진, 우회전
+            go += new GoHome(CarDrivar.좌회전); //go = 좌회전, 직진, 우회전, 좌회전
+            go -= new GoHome(CarDrivar.좌회전); //go = 좌회전, 직진, 우회전 
+
+            go(); //등록된 메서드 모두 호출
+
+            Console.WriteLine();
+
+            Say say = new Say(Hello); //say에 Hello 메서드 등록
+            say += new Say(HI); //say에 HI 메서드 등록
+            say();
+
+            Insa insa = new Insa(); //Insa의 개체 생성
+            Say say1 = new Say(insa.Bye); //다른 공유 클래스(Public)의 메서드도 가져올 수 있음
+            say1 += new Say(insa.Bye); //같은 메서드 중복도 가능
+            say1();
+        }
+    }
+}
+
+
+//30-6 무명 메서드
+
+
+namespace AnonymousMethod
+{
+    public class Print
+    {
+        //입력한 값을 출력해주는 메서드
+        public static void show(string msg) => Console.WriteLine(msg);
+    }
+
+    public class AnonymousMethod
+    {
+        //같은 형식의 메서드만 대리자에 저장 가능
+        public delegate void PrintDelegate(string msg);
+        public delegate void SumDelegate(int a, int b);
+        public delegate int 곱하기(int a);
+        public delegate void Printing();
+
+        static void Main(string[] args)
+        {
+            //메서드 직접 호출
+            Print.show("안녕하세요.");
+
+
+            //대리자에 메서드 등록 후 호출
+            PrintDelegate printDelegate = new PrintDelegate(Print.show);
+            printDelegate("안녕 ; _ ;");
+
+
+            //무명(익명) 메서드로 호출: delegate 키워드로 무명 메서드 생성
+            PrintDelegate am = delegate (string msg)
+            {
+                Console.WriteLine(msg);
+            };
+            am("난 이름이 없어요");
+
+
+            //무명 메서드 생성 및 호출
+            SumDelegate sumDelegate = delegate (int a, int b)
+            {
+                Console.WriteLine(a + b);
+            };
+            sumDelegate(2, 3); //2 + 3 = 5 출력
+
+
+            //람다 식으로 무명 메서드 생성 및 호출
+
+            곱하기 곱셈 = x => x * x; //람다 식으로 표현 가능
+            Console.WriteLine(곱셈(3)); // 3 * 3 = 9
+            Console.WriteLine(곱셈(7)); // 7 * 7 = 49
+
+
+            //람다 식으로 무명 메서드 생성 및 호출
+
+            Printing print = () => Console.WriteLine("무명 메서드를 람다 식으로"); // ()는 매개변수가 없다는걸 나타냄
+            print();
+        }
+    }
+}
+
+
+//30-7 메서드의 매개변수에 대리자 형식 사용하기
+
+class DelegateParameter
+{
+    delegate void Runner(); //대리자 생성
+    static void Main(string[] args)
+    {
+        RunnerCall(new Runner(Go)); //매개변수에 대리자를 사용해 호출
+        RunnerCall(new Runner(Back)); 
+
+    }
+
+    static void RunnerCall(Runner runner) => runner(); //넘어온 메서드 실행
+    static void Go() => Console.WriteLine("직진");
+    static void Back() => Console.WriteLine("후진");
+}
+
+
+
+
+//30-8 Action, Func, Predicate 대리자
+//Action 대리자 - 반환값이 없는 메서드를 대신 호출
+//Func 대리자 - 매개변수와 반환값이 있는 메서드를 대신 호출
+//Predicate 대리자 - T 매개변수에 대한 bool 값을 반환하는 메서드를 대신 호출
+
+
+
+//30-9 Action<T> 대리자 사용하기
+
+class action
+{
+    static void Main(string[] args)
+    {
+        Action<string> print = Console.WriteLine;
+        print("매개변수도 없고 반환값도 없어~");
+    }
+}
+
+
+//30-10 Func<T> 대리자 사용하기
+
+//Func<매개변수 형식, 반환값 형식> 구조
+
+class func
+{
+    static void Main(string[] args)
+    {
+        //Func<T> 대리자를 사용한 여러가지 식
+
+        Func<int, int> 절댓값 = Math.Abs; //Math.Abs 메서드 호출
+        Console.WriteLine(절댓값(-10)); //-10의 절댓값인 10을 int 형식으로 반환
+
+
+        Func<double, double, double> 제곱 = Math.Pow;
+        Console.WriteLine(제곱(2,10)); //2^10 = 1024를 double 형식으로 반환
+
+
+        Func<string, string> 소문자변환 = str => str.ToLower(); // 소문자로 반환
+        Console.WriteLine(소문자변환("ABC")); //abc
+
+
+        //Func<T> 대리자에 람다 식 사용하기
+        Func<int, int> sum = delegate (int x)
+        {
+            return x + x;
+        };
+        Console.WriteLine(sum(1)); //2
+
+        Func<int, double> 절반_변환 = x => x / (double)2; 
+        Console.WriteLine(절반_변환(3)); //1.5
+
+        Func<int, int> 더하기 = x => x + x;
+        Console.WriteLine(더하기(100)); //200
+
+
+        //Func 대리자로 메서드 대신 호출하기
+
+        Func<int, bool> 제로 = x => x == 0; //매개변수가 0이면 true, 아니면 false
+        Console.WriteLine(제로(1)); //false
+        Console.WriteLine(제로(0)); //true
+
+        Func<int, int> one = x => x + 1; //매개변수에 1을 더해서 반환
+        Console.WriteLine(one(5)); //5 + 1 = 6
+        Console.WriteLine(one(99)); //100
+
+        Func<int, int, int> two = (x, y) => x + y; // 매개변수 둘을 더해서 반환
+        Console.WriteLine(two(5, 4)); //9
+        Console.WriteLine(two(10, 9)); //19
+    }
+}
+
+
+//30-11 Func 대리자로 메서드 또는 람다 식 대신 호출하기
+
+class FuncDelegate
+{
+    static string Add(int a, int b) => (a + b).ToString(); //두 수의 합을 문자열로 반환
+
+    static void Main(string[] args)
+    {
+        //Add 함수 직접 호출
+        Console.WriteLine(Add(3, 5)); // 3 + 5 = 8
+
+        //Func 대리자로 Add 함수 대신 호출: 반환값이 있는 메서드를 대신 호출
+        Func<int, int, string> func = Add;
+        Console.WriteLine(func(3, 8)); // 3 + 8 = 11
+
+        //람다 식으로 줄여 표현
+        Func<int, int, string> lamda = (x, y) => (x + y).ToString(); //x + y를 합하고 문자열로 변환
+        Console.WriteLine(lamda(3,2)); //5
+
+    }
+}
+
+
+
+//30-12 Predicate<T> 대리자 사용하기
+//정의: T를 매개변수로 받아 어떤 로직을 수행한 후 그 결과를 bool 형식으로 반환
+
+class PredicateTT
+{
+    static void Main(string[] args)
+    {
+        Predicate<string> predicate = String.IsNullOrEmpty; //공백이거나 null이면 True, 아니면 false
+        Console.WriteLine(predicate("; - ;")); // false
+        Console.WriteLine(predicate("")); // true
+
+        Predicate<Type> predicate1 = t => t.IsPrimitive;
+        Console.WriteLine(predicate1(typeof(int))); //True
+    }
+}*/
+
+
+
+//30-13 Predicate 제네릭 대리자를 메서드의 매개변수로 사용하기
+
+class 잔다
+{
+    static IEnumerable<int> FindNumber(Predicate<int> predicate) //반복기
+    {
+        for (int i = 1; i <= 100; i++)
+        {
+            if (i % 33 == 0)
+            {
+                yield return i;
+            }
+        }
+    }
+
+    static void Main(string[] args)
+    {
+        foreach (var item in FindNumber())
+        {
+
+        }
+    }
+}
+
+
+
+
+
