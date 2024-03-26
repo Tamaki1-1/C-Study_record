@@ -1,0 +1,147 @@
+class 상속
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("33. 상속으로 클래스 확장하기");
+        Console.WriteLine();
+
+        Console.WriteLine("개체 관계 프로그래밍(object relationship programming)");
+        Console.WriteLine("- 클라스 간에 부모와 자식 관계를 설정 할 수 있음");
+
+        Console.WriteLine("\n상속(inheritance)");
+        Console.WriteLine("- 부모 클래스에 정의된 기능을 다시 사용하거나 확장 또는 수정하여 자식 클래스로 만드는 것");
+        Console.WriteLine("- 부모와 자식 간 관계처럼 게층적인 관계를 표현할 때 사용됨");
+
+        Console.WriteLine("\n상속의 종류");
+        Console.WriteLine("-단일 상속");
+        Console.WriteLine("-다중 상속");
+
+        Console.WriteLine("\n클래스 상속 구문 - 클래스 이름 뒤에 : 기호와 부모가 되는 클래스 이름을 붙임");
+    }
+
+    public class 기본클래스이름 { } //기본(부모) 클래스
+    public class 파생클래스이름 : 기본클래스이름 { } //파생(자식)클래스 : 기본(부모)클래스 
+}
+
+
+//33-1 부모 클래스와 자식 클래스
+//부모 클래스 => 상속을 주는 클래스
+//자식 클래스 => 상속을 받는 클래스
+//*부모 클래스의 멤버는 public or protected 엑세스 한정자를 붙여야 사용 가능
+
+namespace InheritanceDemo
+{
+    class 부모 //기본(부모) 클래스
+    {
+        public void Foo()
+        {
+            Console.WriteLine("부모 클래스의 멤버 호출");
+        }
+    }
+
+    class 자식 : 부모 //파생(자식) 클래스
+    {
+        public void Bar() => Console.WriteLine("자식 클래스의 멤버 호출");
+    }
+
+    class InheritanceDemo
+    {
+        static void Main(string[] args)
+        {
+            자식 후레자식 = new 자식(); //파생(자식) 클래스의 인스턴스 생성
+            후레자식.Bar(); //자식 클래스의 멤버 호출
+            후레자식.Foo(); //부모 클래스의 멤버 호출
+        }
+    }
+}
+
+
+//33-2 Base 클래스와 Sub 클래스
+//부모 클래스 => 기반 클래스, 기본 클래스, 슈퍼 클래스
+//자식 클래스 => 파생 클래스, 서브 클래스
+
+public class BaseClass
+{
+    public void Do() => Console.WriteLine("Base 클래스에서 정의된 메서드");
+}
+
+public class SubClass : BaseClass { } // 빈 클래스
+
+
+class MainClass
+{
+    static void Main(string[] args)
+    {
+        SubClass subClass = new SubClass(); //SubClass 개체 생성
+        subClass.Do(); //Base 클래스에서 정의된 메서드
+    }
+}
+
+
+//33-3 Object 클래스 상속
+//모든 클래스는 내부적으로 Object 클래스(조상 클래스)를 상속 받는다.
+//기본적으로 생략되어서 사용하지는 않음
+
+public class Parent : System.Object
+{
+    public void Hi() => Console.WriteLine("안녕하세요");
+}
+
+public class Child : Parent
+{
+    public void Hello() => Console.WriteLine("ㅎㅇ");
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        Child child = new Child(); //자식 클래스에 개체 생성
+        child.Hi(); //안녕하세요
+        child.Hello(); //ㅎㅇ
+
+    }
+}
+
+
+//33-4 부모 클래스 형식 변수에 자식 클래스의 개체 할당하기
+//override 키워드 -> Object 클래스의 ToString() 메서드를 재정의하겠다는 의미
+//클래스 자신을 호출 시 재정의한 값이 출력
+
+class Developer
+{
+    public override string ToString()
+    {
+        return "개발자";
+    }
+}
+class WebDeveloper : Developer
+{
+    public override string ToString()
+    {
+        return "웹 개발자";
+    }
+}
+
+class MobileDeveloper : Developer
+{
+    public override string ToString()
+    {
+        return "모바일 개발자";
+    }
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        WebDeveloper webDeveloper = new WebDeveloper();
+        Console.WriteLine(webDeveloper); //웹 개발자
+
+        MobileDeveloper mobileDeveloper = new MobileDeveloper();
+        Console.WriteLine(mobileDeveloper); //모바일 개발자
+
+        Developer developer = new Developer();
+        Console.WriteLine(developer); //개발자
+    }
+}
