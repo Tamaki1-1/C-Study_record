@@ -1,16 +1,12 @@
-using System;
-using System.Runtime.CompilerServices;
-
-
 class Partial
 {
 
-static void Main(string[] args)
-{
-Console.WriteLine("31. 부분 클래스(partial 키워드)");
-Console.WriteLine("CS 파일 여러 개로 클래스를 분할하고, 컴파일할 때는 클래스 하나로 컴파일하도록 하는 기능");
-Console.WriteLine("이름이 같은 클래스를 가질 수 있다.");
-}
+    static void Main(string[] args)
+    {
+        Console.WriteLine("31. 부분 클래스(partial 키워드)");
+        Console.WriteLine("CS 파일 여러 개로 클래스를 분할하고, 컴파일할 때는 클래스 하나로 컴파일하도록 하는 기능");
+        Console.WriteLine("이름이 같은 클래스를 가질 수 있다.");
+    }
 }
 
 
