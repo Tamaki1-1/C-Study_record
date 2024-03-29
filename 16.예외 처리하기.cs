@@ -1,5 +1,5 @@
 using System;
-/*
+
 
 class 예외_처리하기
 {
