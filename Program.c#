@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-/*
+
 class 특성
 {
     static void Main(string[] args)
@@ -115,7 +115,7 @@ class CallerInformetion
           //소스 경로: C:\C#\36.특성과 리플렉션\36.특성과 리플렉션\Program.cs
           //실행 라인: 100
     }
-}*/
+}
 
 
 
