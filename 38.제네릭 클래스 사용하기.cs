@@ -289,3 +289,258 @@ class 메인
         }
     }
 }
+
+
+//38-9 제네릭 인터페이스
+
+class 제네릭_인터페이스
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("매개변수 T를 쓰는 제네릭 인터페이스의 종류");
+        Console.WriteLine("ICollection<T> 인터페이스: 제네릭 컬렉션 관련 클래스의 부모 역할을 하는 인터페이스 중\n" +
+                          "하나인 ICollection<T> 인터페이스는 제네릭 컬렉션을 조작하는 메서드 정의를 제공한다.");
+        Console.WriteLine("Count: 요소 개수를 반환한다.\n" +
+                          "Add(T): T 개체를 추가합니다.\n" +
+                          "Clear(): 항목을 모두 제거합니다.\n" +
+                          "Contains(T): 특정 값이 들어 있는지 여부를 확인합니다.\n" +
+                          "Remove(T): 맨 처음 발견되는 특정 개체를 제거합니다.\n");
+
+        Console.WriteLine("*IEnumerable<T> 인터페이스: 컬렉션의 데이터를 읽기 전용으로 출력할 때 사용함" +
+                          "출력 전용이라면, IEnumerable<T>을 사용하길 권장함.");
+    }
+}
+
+
+//38-10 문자열 배열을 사용하는 세가지 방법
+
+class 세가지
+{
+    static void Main(string[] args)
+    {
+        //문자열 배열을 선언하는 기본적인 방법
+        var a1 = new string[] {"A", "B", "C"};
+
+        //제네릭 List<T> 개체를 생성한 후 문자열 배열을 ToList() 메서드로 변환
+        var a2 = new List<string>();
+        a2 = a1.ToList(); //배열을 제네릭 List<T>로 변환
+
+        //IEnumerable<T> 개체를 생성한 후 문자열 배열을 바로 대입 가능
+        IEnumerable<string> a3 = a1.ToList(); //읽기 전용(수정 불가)
+
+        //IEnumerable<T> 개체를 ToList() 메서드로 List<T>로 변환
+        var a4 = a3.ToList(); //이럼 수정 가능
+
+        //IEnumerable<T> 개체는 주로 foreach 문으로 반복 사용
+        foreach (var item in a3)
+        {
+            Console.WriteLine(item); // A B C
+        }
+
+        //string[], List<T> 개체는 for 문으로 반복 가능
+        for (int i = 0; i < a1.Length; i++)
+        {
+            Console.WriteLine($"{a1[i]} {a2[i]} {a4[i]}");
+        }
+    }
+}
+
+
+//38-11 제네릭 클래스 만들기
+//클래스를 생성할 때 <T> 형태로 클래스와 클래스의 멤버 성질을 결정 할 수 있다.
+
+public class Cup<T>
+{
+    public T Content { get; set; } //속성
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        Cup<string> aa = new Cup<string>(); //제네릭 클래스의 개체 생성
+        aa.Content = "문자열 제네릭 클래스"; //속성에 값 입력
+
+        Cup<int> bb = new Cup<int>(); //제네릭 클래스에 개체 생성
+        bb.Content = 123; //속성에 값 입력
+
+        Console.WriteLine($"{aa.Content}, {bb.Content}"); //문자열 제네릭 클래스, 123
+    }
+}
+
+
+//38-12 제네릭 클래스의 형식 매개변수로 속성 형식 변경하기
+
+public class Multi<T>
+{
+    public T Data { get; set; } //속성
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        Multi<string> title = new Multi<string>(); //개체 생성
+        title.Data = "연봉";
+
+        Multi<long> income = new Multi<long>();
+        income.Data = 30_000_000;
+
+        Console.WriteLine($"{title.Data}: {income.Data:#,###}"); //연봉: 30,000,000
+    }
+}
+
+
+//38-13 제네릭에 사용자 정의 형식 클래스 전달하기
+//제네릭 클래스에 기본 형식이 아닌 사용자 정의 클래스를 지정하는 예제
+
+class Juice { }
+class Coffee { }
+
+class Cup<T>
+{
+    public T Type { get; set; } //속성
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        //T 형식 매개변수로 Juice 클래스 전송
+        Cup<Juice> cup = new Cup<Juice>(); //Juice의 개체 생성
+        cup.Type = new Juice();
+        Console.WriteLine(cup.Type.ToString()); //Juice
+
+        Cup<Coffee> cup2 = new Cup<Coffee>() { Type = new Coffee() }; //이니셜라이저로 입력
+        Console.WriteLine(cup2.Type.ToString()); //Coffee
+    }
+}
+
+
+//38-14 형식매개변수에 대한 제약조건 걸기
+
+public interface IKs { } //인터페이스
+public class GoodCar { } //기본 클래스
+public class BadCar //매개변수 생성자 클래스
+{
+    public BadCar(string msg)
+    {
+        Console.WriteLine("; _ ;");
+    }
+}
+public class OfficeCamper : GoodCar, IKs { } //상속받는 클래스
+
+
+//where와 struct 키워드로 형식 매개변수 T에 값 형식만 받는 제네릭 클래스 
+public class CarValue<T> where T : struct { } //값 형식만
+
+//참조 형식만 받는 제네릭 클래스
+public class CarReference<T> where T : class { } //참조 형식만
+
+//기본 생성자가 있는 클래스만 받는 제네릭 클래스
+public class CarNew<T> where T : new() { }
+
+//특정 클래스를 상속한 클래스만 받는 제네릭 클래스
+public class CarClass<T> where T : GoodCar { }
+
+//특정 인터페이스만 매개변수로 받는 제네릭 클래스
+public class CarInterface<T> where T : IKs { }
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        //값 형식만 받는 제네릭 클래스
+        CarValue<int> c = new CarValue<int>(); //성공
+        CarValue<double> b = new CarValue<double>(); //성공
+        //<Error>CarValue<string> a = new CarValue<string>();
+
+        //참조 형식만 받는 제네릭 클래스
+        CarReference<string> z = new CarReference<string>();
+        CarReference<object> x = new CarReference<object>();
+        //<Error>CarReference<int> v = new CarReference<int>();
+
+        //기본 생성자가 있는 클래스만 받는 제네릭 클래스
+        CarNew<GoodCar> c1 = new CarNew<GoodCar>(); //성공
+        //<Error>CarNew<BadCar> c2 = new CarNew<BadCar>();
+
+        //특정 클래스를 상속한 클래스만 받는 제네릭 클래스
+        CarClass<OfficeCamper> a1 = new CarClass<OfficeCamper>();
+        //<Error>CarClass<BadCar> a2 = new CarClass<BadCar>();
+
+        //특정 인터페이스만 매개변수로 받을 수 있는 클래스
+        CarInterface<IKs> x1 = new CarInterface<IKs>();
+        //<Error>CarInterface<GoodCar> x2 = new CarInterface<GoodCar>();
+
+    }
+}
+
+
+//38-15 제네릭의 T 형식 매개변수를 여러 개 사용하기
+
+public class Pair<T, V> //매개변수를 2개 사용
+{
+    public T First { get; set; }
+    public V Second { get; set; }
+
+    public Pair(T first, V second) //생성자로 초기화
+    {
+        this.First = first;
+        this.Second = second;
+    }
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        Pair<string, bool> pair = new Pair<string, bool>("; _ ;..", true);
+
+        Console.WriteLine($"{pair.First}는 {pair.Second}입니다."); //; _ ;..는 True입니다.
+    }
+}
+
+
+//38-16 제네릭 클래스와 제네릭 메서드
+
+public class Hello<T>
+{
+    public T _message; //필드
+    public Hello() //기본 생성자
+    {
+        _message = default(T);
+    }
+    public Hello(T message) //매개변수가 있는 생성자
+    {
+        _message = message;
+    }
+
+    public void Say(T message) //제네릭 메서드
+    {
+        Console.WriteLine(message);
+    }
+
+    public T GetMessage() //일반 메서드
+    {
+        return _message;
+    }
+}
+
+class 메인
+{
+    static void Main(string[] args)
+    {
+        //기본 생성자 출력
+        Hello<string> hello = new Hello<string>();
+        Console.WriteLine(hello.GetMessage()); //null
+        Console.WriteLine((new Hello<int>()).GetMessage()); //0
+
+        //매개변수가 있는 생성자 출력
+        Console.WriteLine((new Hello<string>("ㅎㅇ")).GetMessage()); //ㅎㅇ
+        Console.WriteLine((new Hello<decimal>(3.14m)).GetMessage()); //3.14
+
+        //전달된 T의 형식에 따라 출력하는 메서드인 Say로 출력
+        (new Hello<string>()).Say("Say Hello"); //Say Hello
+        (new Hello<int>()).Say(123); //123
+    }
+}
