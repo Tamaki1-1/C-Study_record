@@ -1,1 +1,1 @@
-Console.WriteLine("C#의 가이드 목적으로 활용할 순서도며 학습내용입니다");
+Console.WriteLine("Readonly 전용. C# 복습용으로 만든 코드");
